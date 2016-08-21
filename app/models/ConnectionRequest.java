@@ -30,4 +30,5 @@ public class ConnectionRequest extends Model {
         @EnumValue(value = "ACCEPTED")
         ACCEPTED
     }
+    public static Finder<Long, ConnectionRequest> find = new Finder<Long, ConnectionRequest>(ConnectionRequest.class);
 }

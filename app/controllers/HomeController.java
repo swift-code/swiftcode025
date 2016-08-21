@@ -74,7 +74,7 @@ public class HomeController extends Controller {
                 })
                 .collect(Collectors.toList())));
 
-        return ok();
+        return ok(data);
     }
 
 }
