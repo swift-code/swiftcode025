@@ -2,6 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import forms.LoginForm;
 import forms.SignupForm;
 import models.Profile;
 import models.User;
@@ -21,6 +22,14 @@ public class Application extends Controller {
 
     @Inject
     ObjectMapper objectMapper;
+
+    public Result login(){
+        Form<LoginForm> form = FormFactory.form(LoginForm.class).bindFromRequest();
+        if(form.hasErrors()) {
+            return ok(form.errorsAsJson());
+        }
+        return ok();
+    }
 
     public Result signup() {
 
