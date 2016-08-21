@@ -20,4 +20,9 @@ public class Profile extends Model {
     public String firstname;
     public String lastname;
     public String company;
+
+    public Profile(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
 }
