@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Profile;
 import models.User;
+import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -50,7 +51,7 @@ public class HomeController extends Controller {
                 })
                 .collect(Collectors.toList());
         data.set("suggestion", objectMapper.valueToTree(suggestions));
-        data.set("connections",objectMapper.valueToTree(user.connections.stream()
+        data.set("connections", objectMapper.valueToTree(user.connections.stream()
                 .map(x -> {
                     User connectedUser = User.find.byId(x.id);
                     Profile connectedProfile = Profile.find.byId(connectedUser.profile.id);
@@ -59,9 +60,9 @@ public class HomeController extends Controller {
                     connectionjson.put("firstname", connectedProfile.firstname);
                     connectionjson.put("lastname", connectedProfile.lastname);
                     return connectionjson;
-                        })
+                })
                 .collect(Collectors.toList())));
-        data.set("connectionRequestsReceived",objectMapper.valueToTree(user.connectionRequestsReceived.stream()
+        data.set("connectionRequestsReceived", objectMapper.valueToTree(user.connectionRequestsReceived.stream()
                 .map(x -> {
                     User requestor = User.find.byId(x.sender.id);
                     Profile requestorProfile = Profile.find.byId(requestor.profile.id);
@@ -77,4 +78,15 @@ public class HomeController extends Controller {
         return ok(data);
     }
 
+    public Result updateProfile(Long userId) {
+        DynamicForm form = FormFactory.form().bindFromRequest();
+        User user = User.find.byId(userId);
+        Profile profile = Profile.find.byId(user.profile.id);
+        profile.company = form.get("company");
+        profile.firstname = form.get("firstName");
+        profile.lastname = form.get("lastName");
+        Profile.db().update(profile);
+        return ok();
+    }
 }
+
