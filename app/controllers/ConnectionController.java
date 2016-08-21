@@ -9,7 +9,7 @@ import play.mvc.Result;
 /**
  * Created by lubuntu on 8/21/16.
  */
-public class ConnectionController extends Controller {
+public class  ConnectionController extends Controller {
 
     public Result sendConnectionRequest(Long senderId, Long toId) {
         if(ConnectionRequest.find.where() .and(Expr.eq("sender_id", senderId), Expr.eq("receiver_id", toId)).findUnique() == null) {
