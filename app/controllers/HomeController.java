@@ -67,6 +67,7 @@ public class HomeController extends Controller {
                     Profile requestorProfile = Profile.find.byId(requestor.profile.id);
                     ObjectNode requestorjson = objectMapper.createObjectNode();
                     requestorjson.put("email", requestor.email);
+                    requestorjson.put("connectionRequestId", x.id);
                     requestorjson.put("firstname", requestorProfile.firstname);
                     requestorjson.put("lastname", requestorProfile.lastname);
                     return requestorjson;
